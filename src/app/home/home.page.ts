@@ -10,13 +10,14 @@ import {Category} from "../models/category.model";
 import {RemoteConfigService} from "../services/remote-config.service";
 import { trashOutline } from "ionicons/icons";
 import {addIcons} from "ionicons";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [CommonModule, IonicModule, FormsModule, ],
+  imports: [CommonModule, IonicModule, FormsModule, RouterLink,],
 })
 export class HomePage implements OnInit {
   tasks$: Observable<Task[]> | undefined;
