@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>To-Do List</ion-title>
     <ion-buttons slot="end">
@@ -10,29 +10,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
+<ion-content class="ion-padding">
 
-  <!-- Crear tarea -->
-  <ion-item>
-    <ion-label position="stacked">Nueva tarea</ion-label>
-    <ion-input [(ngModel)]="newTaskTitle" placeholder="Ej. Comprar leche"></ion-input>
-  </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Categoría (opcional)</ion-label>
-    <ion-select [(ngModel)]="selectedCategoryId" interface="popover" placeholder="Seleccionar categoría">
-      <ion-select-option *ngFor="let cat of categories$ | async" [value]="cat.id">
-        {{ cat.name }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Crear nueva tarea</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Título</ion-label>
+        <ion-input [(ngModel)]="newTaskTitle" placeholder="Ej. Comprar leche"></ion-input>
+      </ion-item>
 
-  <div class="ion-text-end ion-margin-top">
-    <ion-button (click)="addTask()" expand="block">Agregar tarea</ion-button>
-  </div>
+      <ion-item>
+        <ion-label position="stacked">Categoría (opcional)</ion-label>
+        <ion-select [(ngModel)]="selectedCategoryId" interface="popover" placeholder="Seleccionar categoría">
+          <ion-select-option *ngFor="let cat of categories$ | async" [value]="cat.id">
+            {{ cat.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <!-- Filtro -->
-  <ion-item class="ion-margin-top">
+      <ion-button expand="block" class="ion-margin-top" (click)="addTask()">Agregar tarea</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-item class="ion-margin-vertical">
     <ion-label position="stacked">Filtrar por categoría</ion-label>
     <ion-select [(ngModel)]="filterCategoryId" interface="popover" placeholder="Todas">
       <ion-select-option [value]="undefined">Todas</ion-select-option>
@@ -42,15 +47,13 @@
     </ion-select>
   </ion-item>
 
-  <!-- Lista de tareas -->
+
   <ion-list *ngIf="getFilteredTasksLength() > 0; else noTasks">
     <ion-item *ngFor="let task of filteredTasks$ | async">
       <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task.id)"></ion-checkbox>
       <ion-label>
-        <div [class.completed]="task.completed">{{ task.title }}</div>
-        <small *ngIf="task.categoryId">
-          Categoría: {{ getCategoryName(task.categoryId) }}
-        </small>
+        <h2 [class.completed]="task.completed">{{ task.title }}</h2>
+        <p *ngIf="task.categoryId">Categoría: {{ getCategoryName(task.categoryId) }}</p>
       </ion-label>
       <ion-button slot="end" fill="clear" color="danger" (click)="deleteTask(task.id)" *ngIf="showTrash">
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
@@ -58,11 +61,12 @@
     </ion-item>
   </ion-list>
 
-  <!-- Mensaje si no hay tareas -->
+
   <ng-template #noTasks>
-    <ion-text color="medium" class="ion-margin-top ion-text-center">
+    <ion-text color="medium" class="ion-text-center ion-margin-top">
       <p>No hay tareas disponibles.</p>
     </ion-text>
   </ng-template>
 
 </ion-content>
+
