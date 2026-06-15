@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import {CommonModule} from "@angular/common";
 import {IonicModule} from "@ionic/angular";
 import {FormsModule} from "@angular/forms";
