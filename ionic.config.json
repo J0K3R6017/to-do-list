@@ -1,7 +1,8 @@
 {
   "name": "To-Do List",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular-standalone"
 }

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Categorías</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nueva categoría</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input [(ngModel)]="newCategoryName" placeholder="Ej. Trabajo"></ion-input>
+      </ion-item>
+      <ion-button expand="block" class="ion-margin-top" (click)="addCategory()">Agregar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="getCategoriesLength() > 0; else emptyState" class="ion-margin-top">
+    <ion-item *ngFor="let cat of categories$ | async">
+      <ion-label>{{ cat.name }}</ion-label>
+      <ion-button fill="clear" color="danger" (click)="deleteCategory(cat.id)">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #emptyState>
+    <ion-text color="medium" class="ion-text-center ion-margin-top">
+      <p>No hay categorías creadas.</p>
+    </ion-text>
+  </ng-template>
+
+</ion-content>
+
