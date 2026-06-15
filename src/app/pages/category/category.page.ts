@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {Category} from "../../models/category.model";
 import {CategoryService} from "../../services/category.service";
+import { trashOutline } from "ionicons/icons";
+import {addIcons} from "ionicons";
 
 @Component({
   selector: 'app-category',
@@ -19,6 +21,7 @@ export class CategoryPage {
 
   constructor(private categoryService: CategoryService) {
     this.categories$ = this.categoryService.getCategories();
+    addIcons({ trashOutline });
   }
 
   addCategory() {

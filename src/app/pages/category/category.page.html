@@ -14,7 +14,7 @@
     <ion-item *ngFor="let cat of categories$ | async">
       <ion-label>{{ cat.name }}</ion-label>
       <ion-button fill="clear" color="danger" (click)="deleteCategory(cat.id)">
-        <ion-icon name="trash-outline"></ion-icon>
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
   </ion-list>
