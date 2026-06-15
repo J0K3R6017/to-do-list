@@ -24,6 +24,14 @@ export class CategoryPage {
     addIcons({ trashOutline });
   }
 
+  getCategoriesLength(): number {
+    let length = 0;
+    this.categories$.subscribe(categories => {
+      length = categories.length;
+    });
+    return length;
+  }
+
   addCategory() {
     if (this.newCategoryName.trim()) {
       this.categoryService.addCategory(this.newCategoryName.trim());

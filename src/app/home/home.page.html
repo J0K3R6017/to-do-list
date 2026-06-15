@@ -3,7 +3,7 @@
     <ion-title>To-Do List</ion-title>
     <ion-buttons slot="end">
       <ion-button [routerLink]="['/category']">
-        <ion-icon name="folder-outline"></ion-icon>
+        <ion-icon name="folder-outline" slot="start"></ion-icon>
         Categorías
       </ion-button>
     </ion-buttons>
@@ -11,25 +11,30 @@
 </ion-header>
 
 <ion-content class="ion-padding" [fullscreen]="true">
+
   <!-- Crear tarea -->
   <ion-item>
-    <ion-input [(ngModel)]="newTaskTitle" placeholder="Nueva tarea"></ion-input>
+    <ion-label position="stacked">Nueva tarea</ion-label>
+    <ion-input [(ngModel)]="newTaskTitle" placeholder="Ej. Comprar leche"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-select [(ngModel)]="selectedCategoryId" interface="popover" placeholder="Categoría (opcional)">
+    <ion-label position="stacked">Categoría (opcional)</ion-label>
+    <ion-select [(ngModel)]="selectedCategoryId" interface="popover" placeholder="Seleccionar categoría">
       <ion-select-option *ngFor="let cat of categories$ | async" [value]="cat.id">
         {{ cat.name }}
       </ion-select-option>
     </ion-select>
-    <ion-button (click)="addTask()">Agregar</ion-button>
   </ion-item>
 
-  <hr />
+  <div class="ion-text-end ion-margin-top">
+    <ion-button (click)="addTask()" expand="block">Agregar tarea</ion-button>
+  </div>
 
-  <!-- Filtro por categoría -->
-  <ion-item>
-    <ion-select [(ngModel)]="filterCategoryId" interface="popover" placeholder="Filtrar por categoría">
+  <!-- Filtro -->
+  <ion-item class="ion-margin-top">
+    <ion-label position="stacked">Filtrar por categoría</ion-label>
+    <ion-select [(ngModel)]="filterCategoryId" interface="popover" placeholder="Todas">
       <ion-select-option [value]="undefined">Todas</ion-select-option>
       <ion-select-option *ngFor="let cat of categories$ | async" [value]="cat.id">
         {{ cat.name }}
@@ -38,7 +43,7 @@
   </ion-item>
 
   <!-- Lista de tareas -->
-  <ion-list>
+  <ion-list *ngIf="getFilteredTasksLength() > 0; else noTasks">
     <ion-item *ngFor="let task of filteredTasks$ | async">
       <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task.id)"></ion-checkbox>
       <ion-label>
@@ -52,5 +57,12 @@
       </ion-button>
     </ion-item>
   </ion-list>
-</ion-content>
 
+  <!-- Mensaje si no hay tareas -->
+  <ng-template #noTasks>
+    <ion-text color="medium" class="ion-margin-top ion-text-center">
+      <p>No hay tareas disponibles.</p>
+    </ion-text>
+  </ng-template>
+
+</ion-content>

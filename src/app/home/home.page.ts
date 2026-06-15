@@ -53,6 +53,14 @@ export class HomePage implements OnInit {
     return categoryName;
   }
 
+  getFilteredTasksLength(): number {
+    let length = 0;
+    this.filteredTasks$?.subscribe(tasks => {
+      length = tasks.length;
+    });
+    return length;
+  }
+
   get filteredTasks$(): Observable<Task[]> {
     return this.tasks$?.pipe(
       map(tasks =>
